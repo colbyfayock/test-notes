@@ -14,22 +14,8 @@ export default function Home() {
       </Head>
 
       <main className={styles.main}>
-
-        <div className={styles.signup}>
-          <div className={styles.signupBody}>
-            <h2>Welcome to Space Jelly!</h2>
-            <p>Sign up for my newsletter to get the latest tutorials straight to your inbox.</p>
-          </div>
-          <div className={styles.signupCta}>
-            <p>
-              <a href="https://colbyfayock.com/newsletter">Sign Up for Newsletter</a>
-            </p>
-          </div>
-          <button className={styles.signupHide}>Hide</button>
-        </div>
-
         <h1 className={styles.title}>
-          My Space Jelly Blog
+          My Notes
         </h1>
 
         <ul className={styles.posts}>
