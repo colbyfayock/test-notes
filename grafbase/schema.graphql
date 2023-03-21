@@ -1,3 +1,11 @@
+schema
+  @auth(
+    providers: [{ type: oidc, issuer: "{{ env.CLERK_ISSUER_URL }}" }]
+    rules: [{ allow: private, operations: ["read", "create"] }]
+  ) {
+  query: Query
+}
+
 type User @model {
   email: Email! @unique
   name: String!

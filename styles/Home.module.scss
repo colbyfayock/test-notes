@@ -27,68 +27,6 @@
   align-items: center;
 }
 
-.signup {
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  color: white;
-  border-radius: .4em;
-  background-color: blueviolet;
-  padding: 2em;
-  margin: 3rem 0;
-
-  h2 {
-    font-size: 1.8em;
-    margin: 0;
-  }
-
-  a {
-    display: inline-block;
-    color: blueviolet;
-    font-size: 1.4em;
-    font-weight: 900;
-    background: white;
-    padding: .6em 1em;
-    border: none;
-    border-radius: .2em;
-  }
-
-}
-
-.signupBody {
-
-  p {
-    margin-top: .2em;
-    margin-bottom: 0;
-  }
-
-}
-
-.signupCta {
-
-  display: flex;
-  align-items: center;
-  margin-left: 2em;
-
-  p {
-    margin: 0;
-  }
-
-}
-
-.signupHide {
-  position: absolute;
-  top: 0;
-  right: 0;
-  color: white;
-  background: none;
-  padding: .5em .8em;
-  border: none;
-  cursor: pointer;
-}
-
 .posts {
 
   font-size: 1.2em;

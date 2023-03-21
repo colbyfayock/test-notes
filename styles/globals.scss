@@ -6,6 +6,7 @@ body {
   margin: 0;
   font-family: Source Sans Pro, sans-serif;
   font-weight: 400;
+  background-color: #eeeeee;
 }
 
 a {
@@ -20,4 +21,12 @@ a {
 
 img {
   max-width: 100%;
+}
+
+// https://github.com/codex-team/editor.js/issues/724#issuecomment-1323898468
+.codex-editor__loader { height: 38px !important; }
+
+.ce-block__content {
+  background-color: white;
+  padding: 0 .6em;
 }

@@ -1,10 +1,28 @@
+import { useState, useRef } from 'react';
+import Link from 'next/link'
 import Head from 'next/head'
+import { getAuth } from "@clerk/nextjs/server";
+import { SignIn } from "@clerk/nextjs";
+
+import { getPosts } from '../lib/posts';
 
 import styles from '../styles/Home.module.scss'
 
-import posts from '../data/posts.json';
+export default function Home({ posts }) {
+  async function handleOnSubmit(e) {
+    e.preventDefault();
+    try {
+      await fetch('/api/posts/create', {
+        method: 'POST',
+        body: JSON.stringify({
+          blocks: `Test Text`
+        })
+      }).then(r => r.json());
+    } catch(e) {
+      setError(e.message);
+    }
+  }
 
-export default function Home() {
   return (
     <div className={styles.container}>
       <Head>
@@ -17,16 +35,37 @@ export default function Home() {
         <h1 className={styles.title}>
           My Notes
         </h1>
+        
+        <div className={styles.editor}>
+          <SignIn path="/sign-in" routing="path" signUpUrl="/sign-up" />
+        </div>
+
+        <form>
+          <div>
+            <input type="text" style={{
+              border: 'none',
+              backgroundColor: 'white',
+              borderRadius: 'none'
+            }} />
+          </div>
+          <p>
+            <button onClick={handleOnSubmit}>Submit</button>
+          </p>
+        </form>
 
         <ul className={styles.posts}>
-          {posts.map(post => {
+          {posts?.map(post => {
             return (
               <li key={post.id}>
-                <a href={`https://spacejelly.dev/posts/${post.slug}`}>
+                <Link href={`/posts/${post.slug}`}>
                   <h3 className={styles.postTitle}>{ post.title }</h3>
-                  <p className={styles.postDate}>{ new Date(post.date).toDateString() }</p>
-                  <div className={styles.postExcerpt} dangerouslySetInnerHTML={{ __html: post.excerpt }} />
-                </a>
+                  <p className={styles.postDate}>
+                    Created: { new Date(post.createdAt).toDateString() }
+                    <br />
+                    Updated: { new Date(post.updatedAt).toDateString() }
+                  </p>
+                  {/* <div className={styles.postExcerpt} dangerouslySetInnerHTML={{ __html: post.excerpt }} /> */}
+                </Link>
               </li>
             )
           })}
@@ -39,4 +78,30 @@ export default function Home() {
       </footer>
     </div>
   )
+}
+
+export async function getServerSideProps(ctx) {
+  const { getToken } = getAuth(ctx.req)
+  const token = await getToken();
+
+  if (!token) {
+    return {
+      redirect: {
+        destination: '/sign-in',
+        permanent: false,
+      },
+    }
+  }
+
+  let posts;
+
+  try {
+    posts = await getPosts({ token })
+  } catch(e) {}
+
+  return {
+    props: {
+      posts: posts || null
+    }
+  }
 }
