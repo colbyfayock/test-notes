@@ -81,8 +81,9 @@ export default function Home({ posts }) {
 }
 
 export async function getServerSideProps(ctx) {
-  const { getToken } = getAuth(ctx.req)
+  const { getToken, userId } = getAuth(ctx.req)
   const token = await getToken();
+  console.log('userId', userId)
 
   if (!token) {
     return {
@@ -96,7 +97,7 @@ export async function getServerSideProps(ctx) {
   let posts;
 
   try {
-    posts = await getPosts({ token })
+    posts = await getPosts({ token, userId })
   } catch(e) {}
 
   return {
