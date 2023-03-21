@@ -6,7 +6,12 @@ export default async function handler(req, res) {
     const { blocks } = JSON.parse(req.body);
 
     const { userId, getToken } = getAuth(req);
-    const token = await getToken();
+    const token = await getToken({
+        template: 'grafbase'
+    });
+
+    console.log('userId', userId)
+    console.log('token', token)
     
     try {
         const results = await createPost({

@@ -82,7 +82,9 @@ export default function Home({ posts }) {
 
 export async function getServerSideProps(ctx) {
   const { getToken, userId } = getAuth(ctx.req)
-  const token = await getToken();
+  const token = await getToken({
+    template: 'grafbase'
+  });
   console.log('userId', userId)
 
   if (!token) {
